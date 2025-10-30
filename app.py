@@ -30,10 +30,10 @@ if "page" not in st.session_state:
 # 初期変数（入力データの初期化）
 # ===================================
 default_state = {
-    "nomic_api_token": st.secrets.get("NOMIC_TOKEN", ""),
+    "nomic_api_token": "",
     "nomic_domain": "atlas.nomic.ai",
-    "nomic_map_url": "chizai-capcom-from-500",
-    "output_sheet_url": "1pt9jeFguPEjw_aWGpHoGVPx4YV49Qp_ngURRK17926M",
+    "nomic_map_url": "",
+    "output_sheet_url": "",
     "output_sheet_name": "シート1",
     "design_sheet_id": "",
     "design_sheet_name": "",
