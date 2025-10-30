@@ -29,7 +29,7 @@ def get_data(token, domain, map_url):
     except Exception as e:
         return None,None,None, str(e)
 
-def create_nomic_dataset(token, domain, map_url, n,f,m):
+def create_nomic_dataset(token, domain, map_url, n,f,m,t,s,c):
     """Nomic Atlasからデータセットを取得し、マスターデータを生成"""
     try:
         nomic.login(token=token, domain=domain)
@@ -37,7 +37,7 @@ def create_nomic_dataset(token, domain, map_url, n,f,m):
         dataset = AtlasDataset(map_id)
 
         df_meta, df_topics, df_data = get_map_data(dataset.maps[0])
-        df_master = prepare_master_dataframe(df_meta, df_topics, df_data,n,f,m)
+        df_master = prepare_master_dataframe(df_meta, df_topics, df_data,n,f,m,t,s,c)
         return df_master, None
     except Exception as e:
         return None, str(e)
@@ -198,13 +198,7 @@ def add_detailed_scores(df_master, df_topics, df_data, n, f, m):
     return df_master
 
 
-def _first_existing_col(df, candidates):
-    for c in candidates:
-        if c in df.columns:
-            return c
-    return None
-
-def add_best_ideas(df_master, df_topics, df_data, n, f, m):
+def add_best_ideas(df_master, df_topics, df_data, n, f, m,t,s,c):
     """トピックごとの最優秀アイデアを抽出（列名ゆらぎ＆型安全対応版）"""
 
     # ---- 合計スコア（型安全に計算）
@@ -214,14 +208,6 @@ def add_best_ideas(df_master, df_topics, df_data, n, f, m):
         pd.to_numeric(df_data.get(m, 0), errors="coerce").fillna(0.0)
     )
 
-    # ---- テキスト列候補
-    title_candidates = ["title", "タイトル", "idea_title", "name", "document_title", "node_title"]
-    summary_candidates = ["summary", "要約", "概要", "説明", "content_summary", "description"]
-    category_candidates = ["category", "カテゴリー", "カテゴリ", "アイデアカテゴリー", "タグ", "label"]
-
-    title_col = _first_existing_col(df_data, title_candidates)
-    summary_col = _first_existing_col(df_data, summary_candidates)
-    category_col = _first_existing_col(df_data, category_candidates)
 
     # ---- 出力列の初期化（正しい型で）
     for col in ["アイデア名", "Summary", "カテゴリー"]:
@@ -247,9 +233,9 @@ def add_best_ideas(df_master, df_topics, df_data, n, f, m):
         best = df_sub.sort_values(by="total_score", ascending=False).iloc[0]
 
         # テキスト列（存在すれば取得）
-        df_master.at[idx, "アイデア名"] = str(best[title_col]) if title_col else ""
-        df_master.at[idx, "Summary"] = str(best[summary_col]) if summary_col else ""
-        df_master.at[idx, "カテゴリー"] = str(best[category_col]) if category_col else ""
+        df_master.at[idx, "アイデア名"] = str(best[t])
+        df_master.at[idx, "Summary"] = str(best[s])
+        df_master.at[idx, "カテゴリー"] = str(best[c])
 
         # 数値列（単一値なので fillna 不要）
         df_master.at[idx, "合計スコア"]   = float(best.get("total_score", 0.0))
@@ -264,12 +250,12 @@ def add_best_ideas(df_master, df_topics, df_data, n, f, m):
 # 🔹 メイン統合処理
 # ==============================
 
-def prepare_master_dataframe(df_meta, df_topics, df_data,n,f,m):
+def prepare_master_dataframe(df_meta, df_topics, df_data,n,f,m,t,s,c):
     """一連の処理をまとめて実行"""
     df_master = create_master_dataframe(df_meta)
     df_master = add_item_count(df_master, df_topics)
     df_master = add_average_scores(df_master, df_topics, df_data,n,f,m)
     df_master = add_excellent_ideas(df_master, df_topics, df_data,n,f,m)
     df_master = add_detailed_scores(df_master, df_topics, df_data, n, f, m)
-    df_master = add_best_ideas(df_master, df_topics, df_data,n,f,m)
+    df_master = add_best_ideas(df_master, df_topics, df_data,n,f,m,t,s,c)
     return df_master
