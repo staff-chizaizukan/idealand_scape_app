@@ -157,7 +157,7 @@ with col2:
     # ---- Outputタブ ----
     elif page == "output":
         st.markdown("<h2>Output</h2>", unsafe_allow_html=True)
-        service_email = "bot-395@sigma-cairn-474804-b7.iam.gserviceaccount.com"
+        service_email = "idealand-scape-app@idealand-scape.iam.gserviceaccount.com"
 
         st.markdown(
             f"""
