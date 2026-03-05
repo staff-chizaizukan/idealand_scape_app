@@ -85,6 +85,10 @@ h2 {
     background-color: #222;
 }
 
+p {
+   font-size:  16px; 
+}
+
 /* ===== 入力エリア ===== */
 input,
 textarea {
@@ -92,7 +96,6 @@ textarea {
     color: #fff !important;
     border-radius: 4px;
     transition: 0.2s ease-in-out;
-    font-size:  16px; 
 }
 
 input:focus,
@@ -113,6 +116,7 @@ button[kind="primary"]:hover {
     background-color: #ddd !important;
 
 }
+
 
 
 
