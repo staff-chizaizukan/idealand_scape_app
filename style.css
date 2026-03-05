@@ -85,8 +85,8 @@ h2 {
     background-color: #222;
 }
 
-p {
-   font-size:  16px; 
+.st-emotion-cache-1qg05tj {
+   font-size:  24px; 
 }
 
 /* ===== 入力エリア ===== */
@@ -116,6 +116,7 @@ button[kind="primary"]:hover {
     background-color: #ddd !important;
 
 }
+
 
 
 
