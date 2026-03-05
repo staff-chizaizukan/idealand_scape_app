@@ -1,7 +1,7 @@
 /* ===== 全体 ===== */
 body,
 .stApp {
-    background-color: #111 !important;
+    background-color: #ffffff !important;
     color: #fff !important;
     font-family: 'Noto Sans JP', sans-serif;
 }
@@ -110,4 +110,5 @@ button[kind="primary"] {
 
 button[kind="primary"]:hover {
     background-color: #ddd !important;
+
 }
