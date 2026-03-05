@@ -92,6 +92,7 @@ textarea {
     color: #fff !important;
     border-radius: 4px;
     transition: 0.2s ease-in-out;
+    font-size:  16px; 
 }
 
 input:focus,
@@ -112,6 +113,7 @@ button[kind="primary"]:hover {
     background-color: #ddd !important;
 
 }
+
 
 
 
