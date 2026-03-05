@@ -56,6 +56,13 @@ for key, value in default_state.items():
 # ヘッダー
 # ===================================
 logo_url = "https://prcdn.freetls.fastly.net/release_image/52909/36/52909-36-dd1d67cb4052a579b0c29e32c84fa9bf-2723x945.png?width=1950&height=1350&quality=85%2C65&format=jpeg&auto=webp&fit=bounds&bg-color=fff"
+st.markdown("""
+<style>
+html, body, [class*="css"]  {
+    font-size: 18px;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.markdown(f"""
     <div class="header">
